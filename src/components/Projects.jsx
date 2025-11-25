@@ -1,110 +1,139 @@
-import { motion } from "framer-motion";
+import { motion, useMotionTemplate, useMotionValue, useTransform } from "framer-motion";
 import { ExternalLink, Github } from "lucide-react";
+import { PROJECTS } from "../constants";
+import PropTypes from "prop-types";
 
-const projects = [
-    {
-        title: "E-Commerce Platform",
-        description:
-            "A full-featured online store built with React, Node.js, and MongoDB. Includes user authentication, payment processing, and admin dashboard.",
-        tags: ["React", "Node.js", "MongoDB", "Stripe"],
-        image: "https://images.unsplash.com/photo-1557821552-17105176677c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80",
-        liveLink: "#",
-        codeLink: "#",
-    },
-    {
-        title: "Task Management App",
-        description:
-            "A collaborative task manager with real-time updates using Socket.io. Features drag-and-drop interface and team workspaces.",
-        tags: ["Vue.js", "Firebase", "Tailwind CSS"],
-        image: "https://images.unsplash.com/photo-1540350394557-8d14678e7f91?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80",
-        liveLink: "#",
-        codeLink: "#",
-    },
-    {
-        title: "Weather Dashboard",
-        description:
-            "A beautiful weather application providing detailed forecasts and historical data visualization using D3.js.",
-        tags: ["React", "D3.js", "OpenWeather API"],
-        image: "https://images.unsplash.com/photo-1592210454359-9043f067919b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
-        liveLink: "#",
-        codeLink: "#",
-    },
-];
+const SpotlightCard = ({ project, index }) => {
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    // 3D Tilt Values
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
+    const rotateX = useTransform(y, [-0.5, 0.5], [5, -5]);
+    const rotateY = useTransform(x, [-0.5, 0.5], [-5, 5]);
+
+    function handleMouseMove({ currentTarget, clientX, clientY }) {
+        const { left, top, width, height } = currentTarget.getBoundingClientRect();
+
+        // Spotlight calculation
+        mouseX.set(clientX - left);
+        mouseY.set(clientY - top);
+
+        // Tilt calculation (normalized -0.5 to 0.5)
+        x.set((clientX - left) / width - 0.5);
+        y.set((clientY - top) / height - 0.5);
+    }
+
+    function handleMouseLeave() {
+        x.set(0);
+        y.set(0);
+    }
+
+    // Bento grid classes based on index
+    const gridClass = index === 0 || index === 3 ? "md:col-span-2" : "md:col-span-1";
+
+    return (
+        <motion.article
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.1 }}
+            style={{
+                rotateX,
+                rotateY,
+                transformStyle: "preserve-3d",
+            }}
+            className={`group relative border border-white/10 md:border-slate-200 bg-[#1E293B] md:bg-white rounded-3xl overflow-hidden backdrop-blur-sm transition-all hover:bg-white/10 md:hover:bg-white hover:border-sky-500/50 md:hover:border-blue-500/50 md:shadow-md md:hover:shadow-lg md:hover:-translate-y-1 ${gridClass}`}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+        >
+            <motion.div
+                className="pointer-events-none absolute -inset-px rounded-3xl opacity-0 transition duration-300 group-hover:opacity-100 z-10"
+                style={{
+                    background: useMotionTemplate`
+            radial-gradient(
+              650px circle at ${mouseX}px ${mouseY}px,
+              rgba(59, 130, 246, 0.15),
+              transparent 80%
+            )
+          `,
+                }}
+            />
+
+            <div className="relative h-full flex flex-col transform-style-3d">
+                <div className="h-48 overflow-hidden">
+                    <img
+                        src={project.image}
+                        alt={`Screenshot of ${project.title}`}
+                        loading="lazy"
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                </div>
+
+                <div className="p-6 flex-1 flex flex-col relative z-20">
+                    <h3 className="text-xl font-bold text-slate-100 md:text-slate-900 mb-2 translate-z-10">{project.title}</h3>
+                    <p className="text-slate-400 md:text-slate-600 text-sm line-clamp-3 mb-4 flex-1">
+                        {project.desc}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2 mb-6">
+                        {project.tech.map((tag) => (
+                            <span
+                                key={tag}
+                                className="px-3 py-1 text-xs font-medium text-sky-300 md:text-blue-700 bg-sky-500/10 md:bg-blue-100 rounded-full border border-sky-500/20 md:border-blue-200"
+                            >
+                                {tag}
+                            </span>
+                        ))}
+                    </div>
+
+                    <div className="flex items-center gap-4 pt-4 border-t border-white/10">
+                        <a
+                            href={project.links.demo}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="flex items-center text-sm font-medium text-slate-300 md:text-slate-500 hover:text-sky-400 md:hover:text-blue-600 transition-colors"
+                        >
+                            <ExternalLink size={16} className="mr-2" /> Live Demo
+                        </a>
+                        <a
+                            href={project.links.code}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="flex items-center text-sm font-medium text-slate-300 md:text-slate-500 hover:text-sky-400 md:hover:text-blue-600 transition-colors"
+                        >
+                            <Github size={16} className="mr-2" /> Source Code
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </motion.article>
+    );
+};
+
+SpotlightCard.propTypes = {
+    project: PropTypes.object.isRequired,
+    index: PropTypes.number.isRequired,
+};
 
 const Projects = () => {
     return (
-        <section id="projects" className="py-20 bg-white dark:bg-gray-900">
+        <section id="projects" className="py-32 relative">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-16">
-                    <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4"
-                    >
-                        Featured Projects
-                    </motion.h2>
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
-                        className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto"
-                    >
-                        Here are some of the projects I've worked on recently. Each one presented unique challenges and learning opportunities.
-                    </motion.p>
-                </div>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="mb-16"
+                >
+                    <h2 className="text-4xl md:text-5xl font-bold text-slate-100 md:text-slate-900 mb-6">Selected Work</h2>
+                    <div className="w-20 h-1 bg-sky-500 md:bg-blue-600 rounded-full" />
+                </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {projects.map((project, index) => (
-                        <motion.div
-                            key={index}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
-                            className="bg-gray-50 dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
-                        >
-                            <div className="relative h-48 overflow-hidden">
-                                <img
-                                    src={project.image}
-                                    alt={project.title}
-                                    className="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500"
-                                />
-                            </div>
-                            <div className="p-6">
-                                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                                    {project.title}
-                                </h3>
-                                <p className="text-gray-600 dark:text-gray-300 mb-4 text-sm line-clamp-3">
-                                    {project.description}
-                                </p>
-                                <div className="flex flex-wrap gap-2 mb-6">
-                                    {project.tags.map((tag) => (
-                                        <span
-                                            key={tag}
-                                            className="px-3 py-1 text-xs font-medium text-indigo-600 bg-indigo-100 dark:text-indigo-400 dark:bg-indigo-900/30 rounded-full"
-                                        >
-                                            {tag}
-                                        </span>
-                                    ))}
-                                </div>
-                                <div className="flex justify-between items-center">
-                                    <a
-                                        href={project.liveLink}
-                                        className="flex items-center text-sm font-medium text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400 transition-colors"
-                                    >
-                                        <ExternalLink size={16} className="mr-1" /> Live Demo
-                                    </a>
-                                    <a
-                                        href={project.codeLink}
-                                        className="flex items-center text-sm font-medium text-gray-700 hover:text-indigo-600 dark:text-gray-300 dark:hover:text-indigo-400 transition-colors"
-                                    >
-                                        <Github size={16} className="mr-1" /> Source Code
-                                    </a>
-                                </div>
-                            </div>
-                        </motion.div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 perspective-1000">
+                    {PROJECTS.map((project, index) => (
+                        <SpotlightCard key={project.id} project={project} index={index} />
                     ))}
                 </div>
             </div>
