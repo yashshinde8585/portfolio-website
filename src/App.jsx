@@ -1,11 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, Suspense, lazy } from "react";
+import { HelmetProvider } from 'react-helmet-async';
 import Lenis from "lenis";
+import { ThemeProvider } from "./context/ThemeContext";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
-import Projects from "./components/Projects";
-import Contact from "./components/Contact";
-import Footer from "./components/Footer";
+import Meta from "./components/SEO/Meta";
+import TimeGreeting from "./components/ui/TimeGreeting";
+
+// Lazy load below-the-fold components
+const Projects = lazy(() => import("./components/Projects"));
+const Contact = lazy(() => import("./components/Contact"));
+const Footer = lazy(() => import("./components/Footer"));
 
 function App() {
   useEffect(() => {
@@ -33,16 +39,30 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#0F172A] md:bg-slate-50 text-slate-100 md:text-slate-900 selection:bg-indigo-500/30">
-      <Navbar />
-      <main className="relative z-10">
-        <Hero />
-        <About />
-        <Projects />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+    <ThemeProvider>
+      <HelmetProvider>
+        <Meta />
+        <div className="min-h-screen bg-[#0F172A] md:bg-slate-50 dark:md:bg-[#0F172A] text-slate-100 md:text-slate-900 dark:md:text-slate-100 selection:bg-indigo-500/30 md:flex">
+          {/* Sidebar Column (10%) */}
+          <div className="w-full md:w-[10%] shrink-0">
+            <Navbar />
+          </div>
+
+          {/* Main Content Column (90%) */}
+          <main className="relative z-10 w-full md:w-[90%]">
+            <Hero />
+            <About />
+            <Suspense fallback={<div className="h-screen flex items-center justify-center text-slate-500">Loading...</div>}>
+              <Projects />
+              <Contact />
+            </Suspense>
+            <Suspense fallback={<div />}>
+              <Footer />
+            </Suspense>
+          </main>
+        </div>
+      </HelmetProvider>
+    </ThemeProvider>
   );
 }
 
