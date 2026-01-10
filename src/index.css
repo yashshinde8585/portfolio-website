@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./scrollbar.css";
 
 @theme {
     --color-deep-void: #030712;
@@ -9,6 +10,8 @@
 /* Noise Overlay */
 body::before {
     content: "";
+    display: none;
+    /* Default: Disabled on mobile for performance */
     position: fixed;
     top: 0;
     left: 0;
@@ -17,12 +20,16 @@ body::before {
     pointer-events: none;
     z-index: 50;
     opacity: 0.05;
+    will-change: opacity;
+    /* Dark mode opacity */
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
 @media (min-width: 768px) {
     body::before {
-        opacity: 0.01;
+        display: block;
+        opacity: 0.04;
+        /* Light mode: subtle texture visible on dark backgrounds */
     }
 }
 
@@ -131,4 +138,77 @@ html.lenis body {
 .scrollbar-hide::-webkit-scrollbar {
     display: none;
     /* Chrome, Safari and Opera */
+}
+
+/* Hardware Acceleration Utility */
+.hardware-accelerated {
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    will-change: transform;
+}
+
+.gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    will-change: transform;
+}
+
+/* Global Selection Color */
+::selection {
+    background: rgba(56, 189, 248, 0.3);
+    color: #fff;
+}
+
+/* Smooth Scrolling & Scroll Padding */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+}
+
+@media (min-width: 768px) {
+    html {
+        scroll-padding-top: 0px;
+    }
+}
+
+section {
+    scroll-margin-top: 80px;
+}
+
+@media (min-width: 768px) {
+    section {
+        scroll-margin-top: 0px;
+    }
+}
+
+/* Shimmer Animation */
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.animate-shimmer {
+    animation: shimmer 2s infinite;
+}
+
+/* Blink Animation */
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+}
+
+.animate-blink {
+    animation: blink 2s ease-in-out infinite;
 }

@@ -32,13 +32,19 @@ const Column = ({ images, direction, speed }) => {
                     ease: "linear",
                     repeatType: "loop"
                 }}
-                className="flex flex-col gap-4 absolute w-full"
+                className="flex flex-col gap-4 absolute w-full gpu-accelerated"
             >
                 {images.map((img, i) => (
                     <div key={i} className="w-full aspect-[3/4] rounded-xl overflow-hidden relative group cursor-pointer">
                         <img
                             src={img}
                             alt=""
+                            loading="lazy"
+                            decoding="async"
+                            onError={(e) => {
+                                e.target.style.display = 'none';
+                                e.target.parentElement.style.backgroundColor = '#1e293b'; // Fallback color
+                            }}
                             className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0"
                         />
                         <div className="absolute inset-0 bg-indigo-500/0 group-hover:bg-indigo-500/10 transition-colors duration-300" />

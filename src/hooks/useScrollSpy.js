@@ -10,8 +10,9 @@ const useScrollSpy = (sectionIds, offset = 100) => {
             for (const id of sectionIds) {
                 const element = document.getElementById(id);
                 if (element) {
-                    const top = element.offsetTop;
-                    const height = element.offsetHeight;
+                    const rect = element.getBoundingClientRect();
+                    const top = rect.top + window.scrollY;
+                    const height = rect.height;
 
                     if (scrollPosition >= top && scrollPosition < top + height) {
                         setActiveId(id);
