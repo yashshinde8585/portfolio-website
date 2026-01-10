@@ -1,35 +1,69 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, Suspense, lazy } from "react";
+import { HelmetProvider } from 'react-helmet-async';
+import Lenis from "lenis";
+import { ThemeProvider } from "./context/ThemeContext";
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import About from "./components/About";
+import Meta from "./components/SEO/Meta";
+import TimeGreeting from "./components/ui/TimeGreeting";
+
+// Lazy load below-the-fold components
+const Projects = lazy(() => import("./components/Projects"));
+const Contact = lazy(() => import("./components/Contact"));
+const Footer = lazy(() => import("./components/Footer"));
 
 function App() {
-  const [count, setCount] = useState(0)
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      direction: "vertical",
+      gestureDirection: "vertical",
+      smooth: true,
+      mouseMultiplier: 1,
+      smoothTouch: false,
+      touchMultiplier: 2,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <ThemeProvider>
+      <HelmetProvider>
+        <Meta />
+        <div className="min-h-screen bg-[#0F172A] md:bg-slate-50 dark:md:bg-[#0F172A] text-slate-100 md:text-slate-900 dark:md:text-slate-100 selection:bg-indigo-500/30 md:flex">
+          {/* Sidebar Column (10%) */}
+          <div className="w-full md:w-[10%] shrink-0">
+            <Navbar />
+          </div>
+
+          {/* Main Content Column (90%) */}
+          <main className="relative z-10 w-full md:w-[90%]">
+            <Hero />
+            <About />
+            <Suspense fallback={<div className="h-screen flex items-center justify-center text-slate-500">Loading...</div>}>
+              <Projects />
+              <Contact />
+            </Suspense>
+            <Suspense fallback={<div />}>
+              <Footer />
+            </Suspense>
+          </main>
+        </div>
+      </HelmetProvider>
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;
