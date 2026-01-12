@@ -3,6 +3,8 @@ import {
 } from 'react-icons/si';
 import { FaGitAlt, FaGithub, FaLinkedin, FaNodeJs } from 'react-icons/fa';
 
+import airbnbProjectImg from '../assets/airbnb_project.jpeg';
+
 export const SKILLS_DATA = [
     {
         category: "Frontend",
@@ -57,7 +59,7 @@ export const EXPERIENCE_DATA = {
             {
                 name: "Leometric Technology Pvt Ltd",
                 role: "Web Developer Intern",
-                duration: "3 Months",
+                duration: "Jun 2025 - Aug 2025",
                 location: "Pune, Maharashtra",
                 workMode: "Onsite",
                 website: "https://www.sendmammogram.com/",
@@ -132,7 +134,7 @@ export const EXPERIENCE_DATA = {
                 role: "Full Stack Developer",
                 duration: "2023",
                 location: "Remote",
-                description: "A full-featured online store built with React, Node.js, and MongoDB. Includes user authentication, payment processing, and admin dashboard.",
+                description: "Built a full-stack Airbnb-style platform enabling users to host, discover, and review accommodations worldwide using MVC architecture with secure data handling and a responsive UI.",
                 logo: "EC",
                 projects: [
                     { id: 1, text: "Implemented Stripe payment gateway", relatedTech: ["node"] },
@@ -202,13 +204,14 @@ export const EXPERIENCE_DATA = {
 export const PROJECTS = [
     {
         id: 1,
-        title: "E-Commerce Platform",
-        desc: "A full-featured online store built with React, Node.js, and MongoDB. Includes user authentication, payment processing, and admin dashboard.",
+        title: "Wanderlust (Airbnb-clone)",
+        desc: "Built a full-stack Airbnb-style platform enabling users to host, discover, and review accommodations worldwide using MVC architecture with secure data handling and a responsive UI.",
         tech: ["React", "Node.js", "MongoDB", "Stripe"],
-        image: "https://images.unsplash.com/photo-1557821552-17105176677c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80",
+        image: airbnbProjectImg,
+        objectFit: "contain",
         links: {
-            demo: "#",
-            code: "#",
+            demo: "https://wanderlust-airbnb-clone-74tv.onrender.com/listings",
+            code: "https://github.com/yashshinde8585/wanderlust-airbnb-clone",
         },
     },
     {
