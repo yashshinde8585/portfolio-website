@@ -11,8 +11,7 @@ const About = () => {
     const stats = [
         { stat: "400+", label: "GitHub Commits (Production-Level)" },
         { stat: "6+", label: "Developer Communities & Meetups" },
-        { stat: "4+", label: "Production-Ready Applications" },
-        { stat: "", label: "Technical Consultant (Student Interest Group)" }
+        { stat: "4+", label: "Production-Ready Applications" }
     ];
 
     React.useEffect(() => {

@@ -1,9 +1,9 @@
 import { Helmet } from 'react-helmet-async';
-import { SOCIAL_LINKS, SKILLS_DATA } from '../../constants';
+import { SOCIAL_LINKS, SKILLS_DATA, PROFILE } from '../../constants';
 
 const Meta = ({
-    title = "Yash Shinde | Full Stack Developer",
-    description = "Full Stack Developer specializing in building accessible, pixel-perfect, and performant web applications with React, Node.js, and modern web technologies.",
+    title = `${PROFILE.name} | ${PROFILE.title}`,
+    description = PROFILE.bio,
     keywords = "Full Stack Developer, React Developer, Web Development, JavaScript, Node.js, Portfolio, Yash Shinde",
     image = "/og-image.png", // Assuming you have an OG image in public folder
     url = "https://yashshinde.com" // Replace with actual URL
