@@ -36,88 +36,97 @@ const TimelineItem = ({ item, isLast, type }) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="relative pl-8 pb-10 last:pb-0"
+            className="relative pl-12 pb-12 last:pb-0"
         >
-            {/* Line */}
+            {/* Dashed Line */}
             {!isLast && (
-                <div className="absolute left-[7px] top-3 -bottom-3 w-[2px] bg-slate-200 dark:bg-white/10 transition-colors" />
+                <div className="absolute left-[15px] top-16 -bottom-4 w-px border-l-2 border-dashed border-slate-200 dark:border-slate-800" />
             )}
 
-            {/* Dot (Inner Only) */}
-            <div className={`absolute left-[4px] top-2 w-2 h-2 rounded-full z-10 ${item.isCurrent ? 'bg-indigo-500 animate-blink shadow-[0_0_8px_rgba(99,102,241,0.6)]' : 'bg-indigo-500'}`} />
-
-
-            <div className="mb-3">
-                <h4 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white transition-colors leading-tight mb-1">
-                    {item.role || item.name}
-                </h4>
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs sm:text-sm">
-                    <span className="text-slate-600 dark:text-slate-400 font-medium transition-colors">
-                        {item.name || item.school}
-                    </span>
-                    <div className="flex items-center gap-2">
-                        <span className="text-[10px] sm:text-xs font-bold text-slate-400 dark:text-slate-500">
-                            {item.duration}
-                        </span>
-                        {item.workMode && (
-                            <span className="px-1.5 py-0.5 rounded bg-indigo-500/10 text-indigo-500 text-[9px] font-bold uppercase tracking-wider">
-                                {item.workMode}
-                            </span>
-                        )}
-                    </div>
-                </div>
+            {/* Icon Marker */}
+            <div className={`absolute left-0 top-6 w-8 h-8 rounded-full flex items-center justify-center z-10 border-2 transition-all duration-300 ${item.isCurrent ? 'bg-indigo-600 border-indigo-600 shadow-md scale-110' : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700'}`}>
+                {type === 'education' ? (
+                    <GraduationCap size={14} className={item.isCurrent ? 'text-white' : 'text-slate-400'} />
+                ) : (
+                    <Briefcase size={14} className={item.isCurrent ? 'text-white' : 'text-slate-400'} />
+                )}
             </div>
 
-            {/* Specialization */}
-            {item.specialization && (
-                <div className="flex items-start gap-2 mb-3">
-                    <div className="mt-1.5 w-1 h-1 rounded-full bg-indigo-500 flex-shrink-0" />
-                    <span className="text-xs sm:text-sm font-semibold text-indigo-500 dark:text-indigo-400 leading-tight">
-                        {item.specialization}
+            {/* Card Wrapper for Content */}
+            <div className="relative bg-slate-50 dark:bg-slate-800/40 p-5 rounded-2xl border border-slate-100 dark:border-slate-700/50 transition-all hover:border-indigo-500/30 hover:shadow-lg hover:-translate-y-1">
+                <div className="mb-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
+                        <h4 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white transition-colors leading-tight">
+                            {item.role || item.name}
+                        </h4>
+                        <div className="flex items-center gap-2">
+                            <span className="px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-700 text-[10px] font-bold text-slate-600 dark:text-slate-300">
+                                {item.duration}
+                            </span>
+                            {item.workMode && (
+                                <span className="px-1.5 py-0.5 rounded bg-indigo-500/10 text-indigo-500 text-[9px] font-bold uppercase tracking-wider">
+                                    {item.workMode}
+                                </span>
+                            )}
+                        </div>
+                    </div>
+
+                    <span className="text-slate-600 dark:text-slate-400 font-medium text-sm transition-colors block mb-2">
+                        {item.name || item.school}
                     </span>
                 </div>
-            )}
 
-            {Array.isArray(item.description) ? (
-                <ul className="list-disc pl-5 space-y-2 text-sm text-slate-600 dark:text-slate-300 marker:text-indigo-500 transition-colors">
-                    {item.description.map((point, idx) => (
-                        <li key={idx} className="leading-relaxed">{renderTextWithLinks(point)}</li>
-                    ))}
-                </ul>
-            ) : item.description ? (
-                <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed max-w-xl transition-colors">
-                    {renderTextWithLinks(item.description)}
-                </p>
-            ) : null}
-
-            {/* Course Tags */}
-            {item.courses && (
-                <div className="flex flex-wrap gap-1.5 mt-2">
-                    {item.courses.map((course, idx) => (
-                        <span
-                            key={idx}
-                            className="px-2 py-0.5 text-[9px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-white/10 rounded transition-colors"
-                        >
-                            {course}
+                {/* Specialization */}
+                {item.specialization && (
+                    <div className="mb-3">
+                        <span className="text-xs sm:text-sm font-semibold text-indigo-500 dark:text-indigo-400 leading-tight">
+                            {item.specialization}
                         </span>
-                    ))}
-                </div>
-            )}
+                    </div>
+                )}
 
-            {/* Website Link */}
-            {item.website && (
-                <motion.a
-                    href={item.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    whileHover={{ x: 5 }}
-                    className="inline-flex items-center gap-2 mt-4 text-xs font-bold text-indigo-500 hover:text-indigo-400 transition-colors group"
-                >
-                    View Project
-                    <ExternalLink size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </motion.a>
-            )}
-        </motion.div>
+                {Array.isArray(item.description) ? (
+                    <div className="space-y-2 text-sm text-slate-600 dark:text-slate-300 transition-colors">
+                        {item.description.map((point, idx) => (
+                            <p key={idx} className="leading-relaxed">{renderTextWithLinks(point)}</p>
+                        ))}
+                    </div>
+                ) : item.description ? (
+                    <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed max-w-xl transition-colors">
+                        {renderTextWithLinks(item.description)}
+                    </p>
+                ) : null
+                }
+
+                {/* Course Tags */}
+                {item.courses && (
+                    <div className="flex flex-wrap gap-1.5 mt-4 pt-4 border-t border-slate-100 dark:border-slate-700/50">
+                        {item.courses.map((course, idx) => (
+                            <span
+                                key={idx}
+                                className="px-2 py-0.5 text-[10px] font-semibold bg-white dark:bg-slate-700/50 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-600/50 rounded transition-colors"
+                            >
+                                {course}
+                            </span>
+                        ))}
+                    </div>
+                )}
+
+                {/* Website Link */}
+                {item.website && (
+                    <motion.a
+                        href={item.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ x: 5 }}
+                        className="inline-flex items-center gap-2 mt-4 text-xs font-bold text-indigo-500 hover:text-indigo-400 transition-colors group"
+                    >
+                        View Project
+                        <ExternalLink size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </motion.a>
+                )}
+            </div>
+        </motion.div >
     );
 };
 

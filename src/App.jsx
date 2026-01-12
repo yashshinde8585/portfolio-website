@@ -1,12 +1,13 @@
 import { useEffect, Suspense, lazy } from "react";
 import { HelmetProvider } from 'react-helmet-async';
 import Lenis from "lenis";
+import { Toaster } from "sonner";
 import { ThemeProvider } from "./context/ThemeContext";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Meta from "./components/SEO/Meta";
-import TimeGreeting from "./components/ui/TimeGreeting";
+
 
 // Lazy load below-the-fold components
 const Projects = lazy(() => import("./components/Projects"));
@@ -41,6 +42,7 @@ function App() {
   return (
     <ThemeProvider>
       <HelmetProvider>
+        <Toaster position="bottom-right" richColors theme="system" />
         <Meta />
         <div className="min-h-screen bg-[#0F172A] md:bg-slate-50 dark:md:bg-[#0F172A] text-slate-100 md:text-slate-900 dark:md:text-slate-100 selection:bg-indigo-500/30 md:flex">
           {/* Sidebar Column (10%) */}
