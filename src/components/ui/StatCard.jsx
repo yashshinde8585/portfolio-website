@@ -51,7 +51,7 @@ const StatCard = ({ stat, label, isActive, onClick }) => {
                 relative p-6 cursor-pointer transition-all duration-500
                 bg-white/80 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700/50 
                 hover:bg-white dark:hover:bg-slate-800 hover:border-indigo-200 dark:hover:border-indigo-500/30
-                shadow-lg hover:shadow-xl dark:shadow-none backdrop-blur-xl h-full flex items-center justify-center
+                shadow-lg hover:shadow-xl dark:shadow-none backdrop-blur-xl h-full flex flex-col justify-center
             `}
         >
             {/* Content Container with Animation */}
@@ -67,24 +67,24 @@ const StatCard = ({ stat, label, isActive, onClick }) => {
                         damping: 25,
                         mass: 1
                     }}
-                    className="flex flex-col items-center"
+                    className="flex flex-col items-start w-full"
                 >
+                    {/* Label (Title at Top Left) */}
+                    <div className="mb-3 text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                        {label}
+                    </div>
+
                     {/* Number and Icon on same line */}
-                    <div className="flex items-center gap-3 mb-2">
+                    <div className="flex items-center gap-4">
                         {/* Icon */}
                         <div className="p-2.5 rounded-xl bg-gradient-to-br from-sky-500/10 to-indigo-500/10 border border-sky-500/20">
-                            <Icon className="w-7 h-7 text-sky-500 dark:text-sky-400" />
+                            <Icon className="w-8 h-8 text-sky-500 dark:text-sky-400" />
                         </div>
 
                         {/* Hero Number */}
-                        <div className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-sky-400 to-indigo-400 bg-clip-text text-transparent group-hover:from-sky-500 group-hover:to-indigo-500 transition-all">
+                        <div className="text-5xl md:text-6xl font-black bg-gradient-to-r from-sky-400 to-indigo-400 bg-clip-text text-transparent group-hover:from-sky-500 group-hover:to-indigo-500 transition-all">
                             {stat}
                         </div>
-                    </div>
-
-                    {/* Label */}
-                    <div className="text-sm font-medium text-slate-600 dark:text-slate-400 group-hover:text-slate-800 dark:group-hover:text-slate-300 transition-colors">
-                        {label}
                     </div>
                 </motion.div>
             </AnimatePresence>

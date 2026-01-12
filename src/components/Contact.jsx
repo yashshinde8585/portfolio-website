@@ -198,7 +198,7 @@ const Contact = () => {
                         transition={{ delay: 0.2 }}
                         className="text-slate-600 dark:text-slate-300 text-base md:text-lg font-medium leading-relaxed max-w-2xl mx-auto"
                     >
-                        Currently available for <b>Full-Time SDE & Full-Stack</b> roles to help you build world-class products.
+                        Open to full-time SDE and Full-Stack Developer opportunities where I can build impactful products.
                     </motion.p>
                 </div>
 

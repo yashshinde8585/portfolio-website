@@ -35,11 +35,15 @@ const Projects = () => {
                             {/* Image Section */}
                             <div className="relative h-48 overflow-hidden">
                                 <div className="absolute inset-0 bg-[#0A0E1A]">
-                                    <img
-                                        src={project.image}
-                                        alt={project.title}
-                                        className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                                    />
+                                    <picture>
+                                        <source srcSet={project.image.replace('.webp', '.avif')} type="image/avif" />
+                                        <source srcSet={project.image} type="image/webp" />
+                                        <img
+                                            src={project.image}
+                                            alt={project.title}
+                                            className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                                        />
+                                    </picture>
                                     <div className="absolute inset-0 bg-[#0A0E1A]/10 group-hover:bg-transparent transition-colors duration-300" />
                                 </div>
                             </div>
