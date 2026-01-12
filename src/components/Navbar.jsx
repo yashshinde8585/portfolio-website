@@ -275,7 +275,7 @@ const Navbar = () => {
 
                 {/* Premium footer text */}
                 <p className="text-center text-slate-500 text-sm mt-8 font-medium">
-                  Let's build something <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">extraordinary</span>
+                  Let&apos;s build something <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">extraordinary</span>
                 </p>
               </motion.div>
             </div>

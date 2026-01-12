@@ -1,7 +1,8 @@
-import { useState, useRef, useEffect } from "react";
-import { motion, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion";
+import { useState, useRef } from "react";
+import { motion, useTransform, useSpring, useMotionValue } from "framer-motion";
 import { Send, Loader2, ArrowRight, Check, Briefcase, Mail, MapPin, Sparkles, Copy } from "lucide-react";
-import emailjs from "@emailjs/browser";
+import { toast } from "sonner";
+
 import { PROFILE } from "../constants";
 
 const FloatingShape = ({ className, delay, duration, rotate }) => (
@@ -23,7 +24,7 @@ const FloatingShape = ({ className, delay, duration, rotate }) => (
     </motion.div>
 );
 
-const AnimatedInput = ({ label, name, type = "text", value, onChange, placeholder, required = false, isTextArea = false }) => {
+const AnimatedInput = ({ label, name, type = "text", value, onChange, required = false, isTextArea = false }) => {
     const [isFocused, setIsFocused] = useState(false);
 
     return (
@@ -76,9 +77,6 @@ const Contact = () => {
         message: "",
         botcheck: ""
     });
-    const [loading, setLoading] = useState(false);
-    const [status, setStatus] = useState("idle");
-    const [errorMessage, setErrorMessage] = useState("");
     const [copied, setCopied] = useState(false);
 
     // Mouse Parallax Logic
@@ -116,41 +114,35 @@ const Contact = () => {
         e.preventDefault();
         if (form.botcheck) return;
 
-        setErrorMessage("");
+
         if (!validateForm()) {
-            setErrorMessage("Please fill in all fields.");
+            toast.error("Please fill in all required fields.");
             return;
         }
+
+        // Backend Simulation / Frontend Handling
+        const promise = new Promise((resolve) => setTimeout(resolve, 2000));
+
+        toast.promise(promise, {
+            loading: "Sending message...",
+            success: () => {
+                setForm({ firstName: "", email: "", message: "", botcheck: "" });
+                setForm({ firstName: "", email: "", message: "", botcheck: "" });
+                return "Message sent successfully!";
+            },
+            error: "Failed to send message.",
+        });
+
+        // EmailJS Logic (Commented out for now as per request)
+        /*
         setLoading(true);
-        setStatus("idle");
-
-        const templateParams = {
-            from_name: form.firstName,
-            to_name: PROFILE.name,
-            from_email: form.email,
-            to_email: PROFILE.email,
-            message: form.message,
-        };
-
         emailjs.send(
             import.meta.env.VITE_EMAILJS_SERVICE_ID,
             import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
             templateParams,
             import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-        ).then(
-            () => {
-                setLoading(false);
-                setStatus("success");
-                setForm({ firstName: "", email: "", message: "", botcheck: "" });
-                setTimeout(() => setStatus("idle"), 5000);
-            },
-            (error) => {
-                setLoading(false);
-                setStatus("error");
-                console.error(error);
-                setErrorMessage("Something went wrong. Please try again later.");
-            }
-        );
+        ).then(...)
+        */
     };
 
     return (
@@ -172,6 +164,20 @@ const Contact = () => {
             </motion.div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+                {/* Section Header */}
+                <div className="mb-12 flex items-center gap-4">
+                    <div className="flex items-center gap-3 px-6 py-3 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg shadow-slate-200/50 dark:shadow-none">
+                        <span className="relative flex h-3 w-3">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-3 w-3 bg-indigo-500"></span>
+                        </span>
+                        <h2 className="text-sm md:text-base font-bold tracking-widest text-slate-900 dark:text-white uppercase">
+                            Contact Me
+                        </h2>
+                    </div>
+                    <div className="h-px bg-gradient-to-r from-slate-200 dark:from-slate-800 to-transparent flex-1" />
+                </div>
 
                 {/* Header */}
                 <div className="text-center mb-10 md:mb-16">
@@ -209,7 +215,7 @@ const Contact = () => {
                         <div className="space-y-6 md:space-y-8">
                             <motion.div
                                 whileHover={{ scale: 1.02, x: 5 }}
-                                className="bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-4 sm:p-6 flex items-center gap-4 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all group cursor-default"
+                                className="bg-slate-50 dark:bg-slate-800/30 border border-slate-300 dark:border-slate-700/50 rounded-2xl p-4 sm:p-6 flex items-center gap-4 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all group cursor-default"
                             >
                                 <div className="p-3 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform duration-300">
                                     <Briefcase size={24} />
@@ -222,7 +228,7 @@ const Contact = () => {
 
                             <motion.div
                                 whileHover={{ scale: 1.02, x: 5 }}
-                                className="bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-4 sm:p-6 flex items-center gap-4 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all group relative"
+                                className="bg-slate-50 dark:bg-slate-800/30 border border-slate-300 dark:border-slate-700/50 rounded-2xl p-4 sm:p-6 flex items-center gap-4 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all group relative"
                             >
                                 <div className="p-3 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform duration-300">
                                     <Mail size={24} />
@@ -246,7 +252,7 @@ const Contact = () => {
 
                             <motion.div
                                 whileHover={{ scale: 1.02, x: 5 }}
-                                className="bg-slate-50 dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-4 sm:p-6 flex items-center gap-4 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all group cursor-default"
+                                className="bg-slate-50 dark:bg-slate-800/30 border border-slate-300 dark:border-slate-700/50 rounded-2xl p-4 sm:p-6 flex items-center gap-4 hover:bg-slate-100 dark:hover:bg-slate-800/50 transition-all group cursor-default"
                             >
                                 <div className="p-3 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform duration-300">
                                     <MapPin size={24} />
@@ -290,7 +296,6 @@ const Contact = () => {
 
                             <motion.button
                                 type="submit"
-                                disabled={loading}
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                                 className="w-full relative overflow-hidden bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-4 rounded-xl hover:shadow-[0_0_20px_rgba(79,70,229,0.5)] transition-all disabled:opacity-50 flex items-center justify-center gap-2 mt-4 group"
@@ -298,7 +303,7 @@ const Contact = () => {
                                 {/* Button Shimmer Effect */}
                                 <div className="absolute inset-0 -translate-x-full group-hover:animate-shimmer bg-gradient-to-r from-transparent via-white/20 to-transparent z-10" />
 
-                                {loading ? (
+                                {false ? (
                                     <Loader2 className="animate-spin" size={20} />
                                 ) : (
                                     <>
@@ -314,25 +319,7 @@ const Contact = () => {
                                 )}
                             </motion.button>
 
-                            {status === "success" && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    className="flex items-center justify-center gap-2 text-green-400 text-sm mt-2 bg-green-500/10 py-2 rounded-lg"
-                                >
-                                    <Check size={16} />
-                                    <span>Message sent successfully!</span>
-                                </motion.div>
-                            )}
-                            {errorMessage && (
-                                <motion.p
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    className="text-red-400 text-center text-sm mt-2"
-                                >
-                                    {errorMessage}
-                                </motion.p>
-                            )}
+
                         </form>
                     </div>
                 </motion.div>
