@@ -32,7 +32,7 @@ const Hero = () => {
                             </span>
                         </h1>
                         <p className="text-lg text-slate-400 md:text-slate-600 dark:md:text-slate-300 mt-6 mb-8 max-w-2xl mx-auto md:mx-0 leading-[1.8]">
-                            Currently SDE Intern at <span className="text-slate-700 dark:text-slate-200 font-semibold">BharatGo</span>. I specialize in building robust backends with <span className="text-indigo-500 font-medium">Node.js</span> and interactive frontends using <span className="text-sky-500 font-medium">React</span> and <span className="text-sky-500 font-medium">Next.js</span>.
+                            Currently SDE Intern at <span className="text-slate-200 md:text-slate-700 dark:md:text-slate-200 font-semibold">BharatGo</span>. I specialize in building robust backends with <span className="text-indigo-400 md:text-indigo-500 font-medium">Node.js</span> and interactive frontends using <span className="text-sky-400 md:text-sky-500 font-medium">React</span> and <span className="text-sky-400 md:text-sky-500 font-medium">Next.js</span>.
                         </p>
 
 

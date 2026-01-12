@@ -3,7 +3,7 @@ import {
 } from 'react-icons/si';
 import { FaGitAlt, FaGithub, FaLinkedin, FaNodeJs } from 'react-icons/fa';
 
-import airbnbProjectImg from '../assets/airbnb_project.jpeg';
+import airbnbProjectImg from '../assets/airbnb_project.webp';
 
 export const SKILLS_DATA = [
     {
@@ -258,7 +258,7 @@ export const PROFILE = {
     name: "Yash Shinde",
     title: "Full-Stack Developer",
     location: "Pune, India",
-    bio: "Building next-gen SaaS. As an SDE Intern at BharatGo, I engineer high-performance Node.js services and Next.js interfaces backed by Dockerized PostgreSQL. Passionate about integrating GenAI and clean architecture into production systems.",
+    bio: "I build user-friendly web applications that solve real problems. I work on both the front and back parts of a website to ensure everything runs smoothly, and I enjoy exploring how Artificial Intelligence can make applications smarter and more useful.",
     email: "yashshinde8585@gmail.com",
 };
 

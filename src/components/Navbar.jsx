@@ -42,7 +42,7 @@ const Navbar = () => {
   return (
     <>
       {/* Desktop Sidebar (Left Dashboard) */}
-      <aside className="hidden md:flex flex-col items-center h-[calc(100vh-2rem)] sticky top-4 my-4 ml-4 rounded-3xl border border-white/5 shadow-2xl bg-[#020617] py-8 z-50">
+      <aside className="hidden md:flex flex-col items-center h-[calc(100vh-2rem)] sticky top-4 my-4 ml-4 rounded-[5rem] border border-white/5 shadow-2xl bg-[#020617] py-8 z-50">
         {/* Brand / Logo */}
         <div className="mb-6 p-2 flex flex-col items-center gap-2">
 
@@ -73,13 +73,13 @@ const Navbar = () => {
                 key={link.id}
                 href={link.href}
                 onClick={() => setClickedSection(link.id)}
-                className={`relative group flex flex-col items-center gap-1.5 p-3 rounded-xl transition-all duration-300 ${isActive ? "text-sky-400" : "text-slate-500 hover:text-slate-300"
+                className={`relative group flex flex-col items-center gap-1.5 p-3 rounded-3xl transition-all duration-300 ${isActive ? "text-sky-400" : "text-slate-500 hover:text-slate-300"
                   }`}
               >
                 {isActive && (
                   <motion.div
                     layoutId="activeTab"
-                    className="absolute inset-0 bg-sky-500/10 rounded-xl border border-sky-500/20 shadow-[0_0_20px_rgba(56,189,248,0.15)] backdrop-blur-sm"
+                    className="absolute inset-0 bg-sky-500/10 rounded-3xl border border-sky-500/20 shadow-[0_0_20px_rgba(56,189,248,0.15)] backdrop-blur-sm"
                     transition={{
                       type: "spring",
                       stiffness: 300,
@@ -88,7 +88,7 @@ const Navbar = () => {
                   />
                 )}
 
-                <div className={`relative z-10 p-2 rounded-lg transition-colors ${isActive ? "bg-sky-500/20 text-sky-300" : "bg-white/5 group-hover:bg-white/10"}`}>
+                <div className={`relative z-10 p-2 rounded-2xl transition-colors ${isActive ? "bg-sky-500/20 text-sky-300" : "bg-white/5 group-hover:bg-white/10"}`}>
                   <Icon size={20} />
                 </div>
                 <span className="relative z-10 text-[10px] font-medium tracking-wide uppercase">{link.name}</span>
@@ -114,7 +114,7 @@ const Navbar = () => {
               href="https://github.com"
               target="_blank"
               rel="noreferrer"
-              className="flex items-center justify-center p-3 rounded-xl bg-slate-900/50 border border-white/5 text-slate-400 hover:text-white hover:border-white/10 hover:bg-white/5 transition-all duration-300 group"
+              className="flex items-center justify-center p-3 rounded-3xl bg-slate-900/50 border border-white/5 text-slate-400 hover:text-white hover:border-white/10 hover:bg-white/5 transition-all duration-300 group"
             >
               <Github size={18} className="group-hover:scale-110 transition-transform" />
             </a>
@@ -122,7 +122,7 @@ const Navbar = () => {
               href="https://linkedin.com"
               target="_blank"
               rel="noreferrer"
-              className="flex items-center justify-center p-3 rounded-xl bg-slate-900/50 border border-white/5 text-slate-400 hover:text-blue-400 hover:border-blue-500/30 hover:bg-blue-500/5 transition-all duration-300 group"
+              className="flex items-center justify-center p-3 rounded-3xl bg-slate-900/50 border border-white/5 text-slate-400 hover:text-blue-400 hover:border-blue-500/30 hover:bg-blue-500/5 transition-all duration-300 group"
             >
               <Linkedin size={18} className="group-hover:scale-110 transition-transform" />
             </a>
@@ -131,7 +131,7 @@ const Navbar = () => {
       </aside>
 
       {/* Mobile Header */}
-      <nav className="fixed w-full z-50 md:hidden transition-all duration-300 bg-[#0F172A]/90 backdrop-blur-md border-b border-white/5">
+      <nav className="fixed w-full z-50 md:hidden transition-all duration-300 bg-[#020617]/80 backdrop-blur-xl border-b border-white/5">
         <div className="px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-1.5 h-6 bg-gradient-to-b from-sky-400 to-indigo-600 rounded-full shadow-[0_0_12px_rgba(56,189,248,0.4)]" />
@@ -198,37 +198,27 @@ const Navbar = () => {
                       transition={{ delay: index * 0.05, duration: 0.3 }}
                       className="group relative"
                     >
-                      {/* Background card */}
-                      <div className={`absolute inset-0 rounded-2xl transition-all duration-300 ${isActive
-                        ? 'bg-gradient-to-r from-cyan-500/10 via-blue-500/10 to-purple-500/10 border border-cyan-400/30 shadow-[0_0_20px_rgba(6,182,212,0.1)]'
-                        : 'bg-white/[0.02] border border-white/[0.05] group-hover:bg-white/[0.05] group-hover:border-white/10'
-                        }`} />
-
                       {/* Content */}
-                      <div className="relative flex items-center gap-5 p-5">
-                        {/* Icon container */}
-                        <div className={`relative p-3.5 rounded-xl transition-all duration-300 ${isActive
-                          ? 'bg-gradient-to-br from-cyan-500 via-blue-500 to-purple-600 shadow-[0_4px_16px_rgba(6,182,212,0.3)]'
-                          : 'bg-gradient-to-br from-white/10 to-white/5 group-hover:from-cyan-500/20 group-hover:to-purple-500/20 group-hover:scale-105'
+                      <div className={`relative flex items-center gap-4 p-4 rounded-full transition-all duration-300 ${isActive
+                        ? 'bg-white/10 border border-white/10 shadow-lg backdrop-blur-md'
+                        : 'hover:bg-white/5 border border-transparent'
+                        }`}>
+
+                        {/* Icon */}
+                        <div className={`p-2 rounded-full transition-colors ${isActive ? 'bg-blue-600/20 text-blue-400' : 'text-slate-500 group-hover:text-slate-200'
                           }`}>
-                          <Icon size={22} className={`transition-colors duration-200 ${isActive ? 'text-white' : 'text-slate-300 group-hover:text-cyan-300'}`} />
+                          <Icon size={20} />
                         </div>
 
                         {/* Text */}
-                        <span className={`text-2xl font-bold transition-colors duration-200 ${isActive
-                          ? 'text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300'
-                          : 'text-slate-200 group-hover:text-white'
+                        <span className={`text-lg font-medium tracking-wide ${isActive ? 'text-white' : 'text-slate-400 group-hover:text-slate-200'
                           }`}>
                           {link.name}
                         </span>
 
-                        {/* Active indicator */}
+                        {/* Minimal Active Indicator */}
                         {isActive && (
-                          <motion.div
-                            layoutId="mobileActiveIndicator"
-                            className="ml-auto w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(6,182,212,0.8)]"
-                            transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                          />
+                          <div className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.6)]" />
                         )}
                       </div>
                     </motion.a>

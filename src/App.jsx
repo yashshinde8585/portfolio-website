@@ -5,14 +5,14 @@ import { Toaster } from "sonner";
 import { ThemeProvider } from "./context/ThemeContext";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import About from "./components/About";
-import Meta from "./components/SEO/Meta";
 
+import Footer from "./components/Footer";
+import Meta from "./components/SEO/Meta";
 
 // Lazy load below-the-fold components
 const Projects = lazy(() => import("./components/Projects"));
 const Contact = lazy(() => import("./components/Contact"));
-const Footer = lazy(() => import("./components/Footer"));
+const About = lazy(() => import("./components/About"));
 
 function App() {
   useEffect(() => {
@@ -53,14 +53,12 @@ function App() {
           {/* Main Content Column (90%) */}
           <main className="relative z-10 w-full md:w-[90%]">
             <Hero />
-            <About />
             <Suspense fallback={<div className="h-screen flex items-center justify-center text-slate-500">Loading...</div>}>
+              <About />
               <Projects />
               <Contact />
             </Suspense>
-            <Suspense fallback={<div />}>
-              <Footer />
-            </Suspense>
+            <Footer />
           </main>
         </div>
       </HelmetProvider>
