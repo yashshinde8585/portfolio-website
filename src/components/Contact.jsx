@@ -133,16 +133,6 @@ const Contact = () => {
             error: "Failed to send message.",
         });
 
-        // EmailJS Logic (Commented out for now as per request)
-        /*
-        setLoading(true);
-        emailjs.send(
-            import.meta.env.VITE_EMAILJS_SERVICE_ID,
-            import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-            templateParams,
-            import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-        ).then(...)
-        */
     };
 
     return (
