@@ -4,6 +4,7 @@ import {
 import { FaGitAlt, FaGithub, FaLinkedin, FaNodeJs } from 'react-icons/fa';
 
 import airbnbProjectImg from '../assets/airbnb_project.webp';
+import luminaImg from '../assets/Lumina.png';
 
 export const SKILLS_DATA = [
     {
@@ -204,6 +205,17 @@ export const EXPERIENCE_DATA = {
 export const PROJECTS = [
     {
         id: 1,
+        title: "Lumina (Smart Job Tracker)",
+        desc: "A Dedicated CRM for Your Career. An advanced application tracking dashboard featuring interactive Kanban boards, progress analytics, and deadline management. It transforms the job search into a structured pipeline, ensuring no opportunity falls through the cracks.",
+        tech: ["Vue.js", "Firebase", "Tailwind CSS"],
+        image: luminaImg,
+        links: {
+            demo: "https://lumina-airesume-jobtracker.onrender.com/#/",
+            code: "#",
+        },
+    },
+    {
+        id: 2,
         title: "Wanderlust (Airbnb-clone)",
         desc: "Built a full-stack Airbnb-style platform enabling users to host, discover, and review accommodations worldwide using MVC architecture with secure data handling and a responsive UI.",
         tech: ["React", "Node.js", "MongoDB", "Stripe"],
@@ -214,28 +226,7 @@ export const PROJECTS = [
             code: "https://github.com/yashshinde8585/wanderlust-airbnb-clone",
         },
     },
-    {
-        id: 2,
-        title: "Task Management App",
-        desc: "A collaborative task manager with real-time updates using Socket.io. Features drag-and-drop interface and team workspaces.",
-        tech: ["Vue.js", "Firebase", "Tailwind CSS"],
-        image: "https://images.unsplash.com/photo-1540350394557-8d14678e7f91?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80",
-        links: {
-            demo: "#",
-            code: "#",
-        },
-    },
-    {
-        id: 3,
-        title: "Weather Dashboard",
-        desc: "A beautiful weather application providing detailed forecasts and historical data visualization using D3.js.",
-        tech: ["React", "D3.js", "OpenWeather API"],
-        image: "https://images.unsplash.com/photo-1592210454359-9043f067919b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80",
-        links: {
-            demo: "#",
-            code: "#",
-        },
-    },
+
 ];
 
 export const SOCIAL_LINKS = [
