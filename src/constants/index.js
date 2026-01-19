@@ -1,7 +1,7 @@
 import {
-    SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiNodedotjs, SiExpress, SiPostgresql, SiFirebase, SiDocker, SiFigma, SiMongodb, SiVuedotjs, SiD3Dotjs
+    SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiNodedotjs, SiExpress, SiPostgresql, SiFirebase, SiFigma, SiMongodb, SiVuedotjs, SiD3Dotjs, SiPostman
 } from 'react-icons/si';
-import { FaGitAlt, FaGithub, FaLinkedin, FaNodeJs } from 'react-icons/fa';
+import { FaGitAlt, FaGithub, FaLinkedin, FaNodeJs, FaMousePointer } from 'react-icons/fa';
 
 import airbnbProjectImg from '../assets/airbnb_project.webp';
 import luminaImg from '../assets/Lumina.png';
@@ -26,8 +26,9 @@ export const SKILLS_DATA = [
     {
         category: "Tools",
         items: [
-            { name: "Docker", icon: SiDocker },
             { name: "Git", icon: FaGitAlt },
+            { name: "Postman", icon: SiPostman },
+            { name: "Cursor", icon: FaMousePointer },
         ],
     },
 ];
