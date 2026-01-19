@@ -36,7 +36,6 @@ const Projects = () => {
                             <div className="relative h-48 overflow-hidden">
                                 <div className="absolute inset-0 bg-[#0A0E1A]">
                                     <picture>
-                                        <source srcSet={project.image.replace('.webp', '.avif')} type="image/avif" />
                                         <source srcSet={project.image} type="image/webp" />
                                         <img
                                             src={project.image}
