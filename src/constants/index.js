@@ -3,8 +3,8 @@ import {
 } from 'react-icons/si';
 import { FaGitAlt, FaGithub, FaLinkedin, FaNodeJs, FaMousePointer } from 'react-icons/fa';
 
-import airbnbProjectImg from '../assets/airbnb_project.webp';
-import luminaImg from '../assets/Lumina.png';
+import airbnbProjectImg from '../assets/airbnb_project_opt.webp';
+import luminaImg from '../assets/Lumina_opt.webp';
 
 export const SKILLS_DATA = [
     {
